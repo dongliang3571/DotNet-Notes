@@ -89,6 +89,114 @@ public class Lion() {
     }
 }
 ```
+### Namespace
+
+First, remember that a namespace declaration with periods, like:
+
+```c#
+namespace MyCorp.TheProduct.SomeModule.Utilities
+{
+    ...
+}
+```
+
+is entirely equivalent to:
+
+```c#
+namespace MyCorp
+{
+    namespace TheProduct
+    {
+        namespace SomeModule
+        {
+            namespace Utilities
+            {
+                ...
+            }
+        }
+    }
+}
+```
+
+If you wanted to, you could put using directives on all of these levels. (Of course, we want to have  usings in only one place, but it would be legal according to the language.)
+
+The rule for resolving which type is implied, can be loosely stated like this: First search the inner-most "scope" for a match, if nothing is found there go out one level to the next scope and search there, and so on, until a match is found. If at some level more than one match is found, if one of the types are from the current assembly, pick that one and issue a compiler warning. Otherwise, give up (compile-time error).
+
+Now, let's be explicit about what this means in a concrete example with the two major conventions.
+
+1. With usings outside:
+
+```c#
+using System;
+using System.Collections.Generic;
+using System.Linq;
+//using MyCorp.TheProduct;  <-- uncommenting this would change nothing
+using MyCorp.TheProduct.OtherModule;
+using MyCorp.TheProduct.OtherModule.Integration;
+using ThirdParty;
+
+namespace MyCorp.TheProduct.SomeModule.Utilities
+{
+    class C
+    {
+        Ambiguous a;
+    }
+}
+```
+
+In the above case, to find out what type Ambiguous is, the search goes in this order:
+
+Nested types inside `C` (including inherited nested types)
+Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
+Types in namespace `MyCorp.TheProduct.SomeModule`
+Types in `MyCorp.TheProduct`
+Types in `MyCorp`
+Types in the `null` namespace (the global namespace)
+Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct.OtherModule`, `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
+The other convention:
+
+2. With usings inside:
+
+```c#
+namespace MyCorp.TheProduct.SomeModule.Utilities
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using MyCorp.TheProduct;                           // MyCorp can be left out; this using is NOT redundant
+    using MyCorp.TheProduct.OtherModule;               // MyCorp.TheProduct can be left out
+    using MyCorp.TheProduct.OtherModule.Integration;   // MyCorp.TheProduct can be left out
+    using ThirdParty;
+
+    class C
+    {
+        Ambiguous a;
+    }
+}
+```
+
+Now, search for the type Ambiguous goes in this order:
+
+    1. Nested types inside `C` (including inherited nested types)
+    2. Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
+    3. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct`, `MyCorp.TheProduct.OtherModule`,        `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
+    4. Types in namespace `MyCorp.TheProduct.SomeModule`
+    5. Types in `MyCorp`
+    6. Types in the `null` namespace (the global namespace)
+    
+(Note that `MyCorp.TheProduct` was a part of "3." and was therefore not needed between "4." and "5.".)
+
+**Concluding remarks**
+
+No matter if you put the usings inside or outside the namespace declaration, there's always the possibility that someone later adds a new type with identical name to one of the namespaces which have higher priority.
+
+Also, if a nested namespace has the same name as a type, it can cause problems.
+
+It is always dangerous to move the usings from one location to another because the search hierarchy changes, and another type may be found. Therefore, choose one convention and stick to it, so that you won't have to ever move usings.
+
+Visual Studio's templates, by default, put the usings outside of the namespace (for example if you make VS generate a new class in a new file).
+
+One (tiny) advantage of having usings outside is that you can then utilize the using directives for a global attribute, for example [assembly: ComVisible(false)] instead of [assembly: System.Runtime.InteropServices.ComVisible(false)].
 
 ### `using` statement inside and outside the namespace
 
