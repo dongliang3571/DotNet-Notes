@@ -146,13 +146,14 @@ namespace MyCorp.TheProduct.SomeModule.Utilities
 
 In the above case, to find out what type Ambiguous is, the search goes in this order:
 
-Nested types inside `C` (including inherited nested types)
-Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
-Types in namespace `MyCorp.TheProduct.SomeModule`
-Types in `MyCorp.TheProduct`
-Types in `MyCorp`
-Types in the `null` namespace (the global namespace)
-Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct.OtherModule`, `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
+    1. Nested types inside `C` (including inherited nested types)
+    2. Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
+    3. Types in namespace `MyCorp.TheProduct.SomeModule`
+    4. Types in `MyCorp.TheProduct`
+    5. Types in `MyCorp`
+    6. Types in the `null` namespace (the global namespace)
+    7. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct.OtherModule`, `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
+    
 The other convention:
 
 2. With usings inside:
