@@ -91,6 +91,12 @@ public class Lion() {
 ```
 ### Namespace
 
+Namespaces have the following properties:
+  - They organize large code projects.
+  - They are delimited by using the . operator.
+  - The using directive obviates the requirement to specify the name of the namespace for every class.
+  - The global namespace is the "root" namespace: global::System will always refer to the .NET Framework namespace System.
+
 First, remember that a namespace declaration with periods, like:
 
 ```c#
@@ -151,7 +157,7 @@ In the above case, to find out what type Ambiguous is, the search goes in this o
     3. Types in namespace `MyCorp.TheProduct.SomeModule`
     4. Types in `MyCorp.TheProduct`
     5. Types in `MyCorp`
-    6. Types in the `null` namespace (the global namespace)
+    6. Types in the `global` namespace (the global namespace)
     7. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct.OtherModule`, `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
     
 The other convention:
@@ -183,7 +189,7 @@ Now, search for the type Ambiguous goes in this order:
     3. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct`, `MyCorp.TheProduct.OtherModule`,        `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
     4. Types in namespace `MyCorp.TheProduct.SomeModule`
     5. Types in `MyCorp`
-    6. Types in the `null` namespace (the global namespace)
+    6. Types in the `global` namespace (the global namespace)
     
 (Note that `MyCorp.TheProduct` was a part of "3." and was therefore not needed between "4." and "5.".)
 
