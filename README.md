@@ -207,13 +207,13 @@ namespace MyCorp.TheProduct.SomeModule.Utilities
 
 In the above case, to find out what type Ambiguous is, the search goes in this order:
 
-    1. Nested types inside `C` (including inherited nested types)
-    2. Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
-    3. Types in namespace `MyCorp.TheProduct.SomeModule`
-    4. Types in `MyCorp.TheProduct`
-    5. Types in `MyCorp`
-    6. Types in the `global` namespace (the global namespace)
-    7. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct.OtherModule`, `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
+  1. Nested types inside `C` (including inherited nested types)
+  2. Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
+  3. Types in namespace `MyCorp.TheProduct.SomeModule`
+  4. Types in `MyCorp.TheProduct`
+  5. Types in `MyCorp`
+  6. Types in the `global` namespace (the global namespace)
+  7. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct.OtherModule`, `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
     
 The other convention:
 
@@ -239,12 +239,12 @@ namespace MyCorp.TheProduct.SomeModule.Utilities
 
 Now, search for the type Ambiguous goes in this order:
 
-    1. Nested types inside `C` (including inherited nested types)
-    2. Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
-    3. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct`, `MyCorp.TheProduct.OtherModule`,        `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
-    4. Types in namespace `MyCorp.TheProduct.SomeModule`
-    5. Types in `MyCorp`
-    6. Types in the `global` namespace (the global namespace)
+  1. Nested types inside `C` (including inherited nested types)
+  2. Types in the current namespace `MyCorp.TheProduct.SomeModule.Utilities`
+  3. Types in `System`, `System.Collections.Generic`, `System.Linq`, `MyCorp.TheProduct`, `MyCorp.TheProduct.OtherModule`,        `MyCorp.TheProduct.OtherModule.Integration`, and `ThirdParty`
+  4. Types in namespace `MyCorp.TheProduct.SomeModule`
+  5. Types in `MyCorp`
+  6. Types in the `global` namespace (the global namespace)
     
 (Note that `MyCorp.TheProduct` was a part of "3." and was therefore not needed between "4." and "5.".)
 
