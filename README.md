@@ -90,3 +90,58 @@ public class Lion() {
 }
 ```
 
+### `using` statement inside and outside the namespace
+
+There is actually a (subtle) difference between the two. Imagine you have the following code in **File1.cs**:
+
+```c#
+// File1.cs
+using System;
+namespace Outer.Inner
+{
+    class Foo
+    {
+        static void Bar()
+        {
+            double d = Math.PI;
+        }
+    }
+}
+```
+
+Now imagine that someone adds another file (**File2.cs**) to the project that looks like this:
+
+```c#
+// File2.cs
+namespace Outer
+{
+    class Math
+    {
+    }
+}
+```
+
+The compiler searches Outer before looking at those using statements outside the namespace, so it finds Outer.Math instead of System.Math. Unfortunately (or perhaps fortunately?), Outer.Math has no PI member, so **File1** is now broken.
+
+This changes if you put the using inside your namespace declaration, as follows:
+
+```c#
+// File1b.cs
+namespace Outer.Inner
+{
+    using System;
+    class Foo
+    {
+        static void Bar()
+        {
+            double d = Math.PI;
+        }
+    }
+}
+```
+
+Now the compiler searches `System` before searching Outer, finds `System.Math`, and all is well.
+
+Some would argue that Math might be a bad name for a user-defined class, since there's already one in `System`; the point here is just that there is a difference, and it affects the maintainability of your code.
+
+It's also interesting to note what happens if Foo is in namespace `Outer`, rather than `Outer.Inner`. In that case, adding `Outer.Math` in **File2** breaks **File1** regardless of where the using goes. This implies that the compiler searches the innermost enclosing namespace before it looks at any `using` statements.
