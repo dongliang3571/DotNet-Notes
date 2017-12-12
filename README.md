@@ -329,3 +329,7 @@ Now the compiler searches `System` before searching Outer, finds `System.Math`, 
 Some would argue that Math might be a bad name for a user-defined class, since there's already one in `System`; the point here is just that there is a difference, and it affects the maintainability of your code.
 
 It's also interesting to note what happens if Foo is in namespace `Outer`, rather than `Outer.Inner`. In that case, adding `Outer.Math` in **File2** breaks **File1** regardless of where the using goes. This implies that the compiler searches the innermost enclosing namespace before it looks at any `using` statements.
+
+### Attributes
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/index
