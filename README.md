@@ -89,6 +89,20 @@ public class Lion() {
     }
 }
 ```
+
+### Some rules
+
+If you use the built-in templates to add classes to a folder, it will by default be put in a namespace that reflects the folder hierarchy.
+
+The classes will be easier to find and that alone should be reasons good enough.
+
+The rules we follow are:
+
+- Project/assembly name is the same as the root namespace, except for the .dll ending
+- Only exception to the above rule is a project with a .Core ending, the .Core is stripped off
+- Folders equals namespaces
+- One type per file (class, struct, enum, delegate, etc.) makes it easy to find the right file
+
 ### Namespace
 
 Namespaces have the following properties:
