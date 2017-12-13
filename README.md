@@ -61,6 +61,124 @@ To be object oriented, a language is designed around the concept of objects. tha
   
 Structs do not support inheritance, but they can implement interfaces. For more information, see [Interfaces]https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/index).
 
+**Override, Virtual**
+
+If a member class or member variable need to be overidden, you need to have keyword `virtual` in the memeber variable or method in the base class, and `override` is needed in derived class in order to override an variable or method.
+
+This example defines a base class named `Employee`, and a derived class named `SalesEmployee`. The `SalesEmployee` class includes an extra property, `salesbonus`, and overrides the method `CalculatePay` in order to take it into account.
+
+```c#
+class TestOverride
+{
+    public class Employee
+    {
+        public string name;
+
+        // Basepay is defined as protected, so that it may be 
+        // accessed only by this class and derrived classes.
+        protected decimal basepay;
+
+        // Constructor to set the name and basepay values.
+        public Employee(string name, decimal basepay)
+        {
+            this.name = name;
+            this.basepay = basepay;
+        }
+
+        // Declared virtual so it can be overridden.
+        public virtual decimal CalculatePay()
+        {
+            return basepay;
+        }
+    }
+
+    // Derive a new class from Employee.
+    public class SalesEmployee : Employee
+    {
+        // New field that will affect the base pay.
+        private decimal salesbonus;
+
+        // The constructor calls the base-class version, and
+        // initializes the salesbonus field.
+        public SalesEmployee(string name, decimal basepay, 
+                  decimal salesbonus) : base(name, basepay)
+        {
+            this.salesbonus = salesbonus;
+        }
+
+        // Override the CalculatePay method 
+        // to take bonus into account.
+        public override decimal CalculatePay()
+        {
+            return basepay + salesbonus;
+        }
+    }
+
+    static void Main()
+    {
+        // Create some new employees.
+        SalesEmployee employee1 = new SalesEmployee("Alice", 
+                      1000, 500);
+        Employee employee2 = new Employee("Bob", 1200);
+
+        Console.WriteLine("Employee4 " + employee1.name + 
+                  " earned: " + employee1.CalculatePay());
+        Console.WriteLine("Employee4 " + employee2.name + 
+                  " earned: " + employee2.CalculatePay());
+    }
+}
+/*
+    Output:
+    Employee4 Alice earned: 1500
+    Employee4 Bob earned: 1200
+*/
+```
+
+**abstract**
+
+The `abstract` modifier indicates that the thing being modified has a missing or incomplete implementation. The abstract modifier can be used with classes, methods, properties, indexers, and events. Use the `abstract` modifier in a class declaration to indicate that a class is intended only to be a base class of other classes. Members marked as abstract, or included in an abstract class, must be implemented by classes that derive from the abstract class.
+
+In this example, the class `Square` must provide an implementation of `Area` because it derives from `ShapesClass`:
+
+```c#
+abstract class ShapesClass
+{
+    abstract public int Area();
+}
+class Square : ShapesClass
+{
+    int side = 0;
+
+    public Square(int n)
+    {
+        side = n;
+    }
+    // Area method is required to avoid
+    // a compile-time error.
+    public override int Area()
+    {
+        return side * side;
+    }
+
+    static void Main() 
+    {
+        Square sq = new Square(12);
+        Console.WriteLine("Area of the square = {0}", sq.Area());
+    }
+
+    interface I
+    {
+        void M();
+    }
+    abstract class C : I
+    {
+        public abstract void M();
+    }
+
+}
+// Output: Area of the square = 144
+```
+
 ### Polymorphism
 
 - A class can be used as its own type, cast to any base types or interface types it implements. 
