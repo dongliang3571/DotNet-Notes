@@ -353,3 +353,12 @@ Now, you make it a struct. The properties are still mutable. You perform the sam
 This becomes even more confusing if you were to have a reference type as a member of your struct (not disallowed, but extremely bad practice in virtually all cases); the class would not be cloned (only the struct's reference to it), so changes to the struct would not affect the original object, but changes to the struct's subclass WILL affect the instance from the calling code. This can very easily put mutable structs in very inconsistent states that can cause errors a long way away from where the real problem is.
 
 **Always make your structures immutable**
+
+Use class if:
+  - you need a reference type
+  - instances of the type are big
+ 
+ Classes can optionally be declared as:
+   - static - cannot ever be instantiated
+   - abstracct - incomplete classs; must be completed in a derived class
+   - sealed - cannot be inherited from
