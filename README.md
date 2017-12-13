@@ -513,3 +513,29 @@ Partial method requirements:
   - Partial methods are implicitly private methods.
   - Partial methods can be static methods.
   - Partial methods can be generic.
+
+### Access Modifiers
+
+All types and members have an accessibility level:
+
+- public - The type or member can be accessed by any other code in the same assembly or another assembly that references it.
+- private - The type or member can be accessed only by code in the same class or struct.
+- protected - The type or member can be accessed only by code in the same class, or in a class that is derived from that class.
+- internal - The type or member can be accessed by any code in the same assembly, but not from another assembly.
+- protected internal - The type or member can be accessed by any code in the assembly in which it is declared, or from within a derived class in another assembly
+- private protected - The type or member can be accessed only within its declaring assembly, by code in the same class or in a type that is derived from that class.
+
+Access modifiers are not allowed on namespaces. Namespaces have no access restrictions.
+
+Depending on the context in which a member declaration occurs, only certain declared accessibilities are permitted. If no access modifier is specified in a member declaration, a default accessibility is used.
+
+Top-level types, which are not nested in other types, can only have `internal` or `public` accessibility. The default accessibility for these types is `internal`.
+
+Nested types, which are members of other types, can have declared accessibilities as indicated in the following table.
+
+|members of	| Default member accessibility	| Allowed declared accessibility of the member |
+|-----------|-------------------------------|----------------------------------------------|
+|enums      |public                         | None|
+|class | private|public, protected, internal, private, protected internal, private protected|
+|interface| public | None|
+|struct| private| public, internal, private|
