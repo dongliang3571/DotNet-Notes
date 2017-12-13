@@ -333,3 +333,23 @@ It's also interesting to note what happens if Foo is in namespace `Outer`, rathe
 ### Attributes
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/index
+
+### Difference between struct and class in C sharp
+
+Use structs if:
+
+  - instances of the type are small
+  - the struct is commonly embedded in another type
+  - the structlogically represent a single value
+  - the values don't change (immutable)
+  - It is rarely "boxed"
+  
+structs are value types. (Always pass by values)
+
+For example, say you have a class SimpleClass with two properties, A and B. You instantiate a copy of this class, initialize A and B, and then pass the instance to another method. That method further modifies A and B. Back in the calling function (the one that created the instance), your instance's A and B will have the values given to them by the called method.
+
+Now, you make it a struct. The properties are still mutable. You perform the same operations with the same syntax as before, but now, A and B's new values aren't in the instance after calling the method. What happened? Well, your class is now a struct, meaning it's a value type. If you pass a value type to a method, the default (without an out or ref keyword) is to pass "by value"; a shallow copy of the instance is created for use by the method, and then destroyed when the method is done leaving the initial instance intact.
+
+This becomes even more confusing if you were to have a reference type as a member of your struct (not disallowed, but extremely bad practice in virtually all cases); the class would not be cloned (only the struct's reference to it), so changes to the struct would not affect the original object, but changes to the struct's subclass WILL affect the instance from the calling code. This can very easily put mutable structs in very inconsistent states that can cause errors a long way away from where the real problem is.
+
+**Always make your structures immutable**
