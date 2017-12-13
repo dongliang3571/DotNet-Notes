@@ -59,6 +59,8 @@ To be object oriented, a language is designed around the concept of objects. tha
   - A class may inherit from a single base class
   - A class may implement zero or more Interface
   
+Structs do not support inheritance, but they can implement interfaces. For more information, see [Interfaces]https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/index).
+
 ### Polymorphism
 
 - A class can be used as its own type, cast to any base types or interface types it implements. 
@@ -430,6 +432,40 @@ Advantages of Partial class:
   - Multiple developers can work simultaneously with a single class in separate files.
   - When working with automatically generated source, code can be added to the class without having to recreate the source file. For example, Visual Studio separates HTML code for the UI and server side code into two separate files: .aspx and .cs files.
   
+The following example shows that nested types can be partial, even if the type they are nested within is not partial itself.
+
+```c#
+class Container
+{
+    partial class Nested
+    {
+        void Test() { }
+    }
+    partial class Nested
+    {
+        void Test2() { }
+    }
+}
+```
+
+At compile time, attributes of partial-type definitions are merged. For example, consider the following declarations:
+
+```c#
+[SerializableAttribute]
+partial class Moon { }
+
+[ObsoleteAttribute]
+partial class Moon { }
+```
+
+They are equivalent to the following declarations:
+
+```c#
+[SerializableAttribute]
+[ObsoleteAttribute]
+class Moon { }
+```
+
 Partial Methods:
 
 A partial class or struct may contain partial methods. A partial method must be declared in one of the partial classes. A partial method may or may not have an implementation. If the partial method doesn't have an implementation in any part then the compiler will not generate that method in the final class. For example, consider the following partial method with a partial keyword:
