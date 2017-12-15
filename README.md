@@ -811,3 +811,187 @@ Nested types, which are members of other types, can have declared accessibilitie
 |class | private|public, protected, internal, private, protected internal, private protected|
 |interface| public | None|
 |struct| private| public, internal, private|
+
+### Method parameters
+
+**`params`**
+
+By using the `params` keyword, you can specify a method parameter that takes a variable number of arguments.
+
+You can send a comma-separated list of arguments of the type specified in the parameter declaration or an array of arguments of the specified type. You also can send no arguments. If you send no arguments, the length of the `params` list is zero.
+
+No additional parameters are permitted after the `params` keyword in a method declaration, and only one `params` keyword is permitted in a method declaration.
+
+The following example demonstrates various ways in which arguments can be sent to a `params` parameter.
+
+```c#
+public class MyClass
+{
+    public static void UseParams(params int[] list)
+    {
+        for (int i = 0; i < list.Length; i++)
+        {
+            Console.Write(list[i] + " ");
+        }
+        Console.WriteLine();
+    }
+
+    public static void UseParams2(params object[] list)
+    {
+        for (int i = 0; i < list.Length; i++)
+        {
+            Console.Write(list[i] + " ");
+        }
+        Console.WriteLine();
+    }
+
+    static void Main()
+    {
+        // You can send a comma-separated list of arguments of the 
+        // specified type.
+        UseParams(1, 2, 3, 4);
+        UseParams2(1, 'a', "test");
+
+        // A params parameter accepts zero or more arguments.
+        // The following calling statement displays only a blank line.
+        UseParams2();
+
+        // An array argument can be passed, as long as the array
+        // type matches the parameter type of the method being called.
+        int[] myIntArray = { 5, 6, 7, 8, 9 };
+        UseParams(myIntArray);
+
+        object[] myObjArray = { 2, 'b', "test", "again" };
+        UseParams2(myObjArray);
+
+        // The following call causes a compiler error because the object
+        // array cannot be converted into an integer array.
+        //UseParams(myObjArray);
+
+        // The following call does not cause an error, but the entire 
+        // integer array becomes the first element of the params array.
+        UseParams2(myIntArray);
+    }
+}
+/*
+Output:
+    1 2 3 4
+    1 a test
+           
+    5 6 7 8 9
+    2 b test again
+    System.Int32[]
+*/
+```
+
+**`ref`**
+
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/ref
+
+The `ref` keyword indicates a value that is passed by reference. It is used in three different contexts:
+
+  - In a method signature and in a method call, to pass an argument to a method by reference. See **Passing an argument by reference** for more information.
+
+  - In a method signature, to return a value to the caller by reference. See **Reference return values** for more information.
+
+  - In a member body, to indicate that a reference return value is stored locally as a reference that the caller intends to modify. See **Ref locals** for more information.
+
+**Passing an argument by reference**
+
+When used in a method's parameter list, the `ref` keyword indicates that an argument is passed by reference, not by value. The effect of passing by reference is that any change to the argument in the called method is reflected in the calling method. For example, if the caller passes a local variable expression or an array element access expression, and the called method replaces the object to which the ref parameter refers, then the caller’s local variable or the array element now refers to the new object when the method returns.
+
+**Note:**
+
+Do not confuse the concept of passing by reference with the concept of reference types. The two concepts are not the same. A method parameter can be modified by ref regardless of whether it is a value type or a reference type. There is no boxing of a value type when it is passed by reference.
+
+To use a `ref` parameter, both the method definition and the calling method must explicitly use the ref keyword, as shown in the following example.
+
+```c#
+class RefExample
+{
+    static void Method(ref int i)
+    {
+        i = i + 44;
+    }
+
+    static void Main()
+    {
+        int val = 1;
+        Method(ref val);
+        Console.WriteLine(val);
+        // Output: 45
+    }
+}
+```
+
+An argument that is passed to a `ref` parameter must be initialized before it is passed. This differs from out parameters, whose arguments do not have to be explicitly initialized before they are passed.
+
+Members of a class can't have signatures that differ only by `ref` and `out`. A compiler error occurs if the only difference between two members of a type is that one of them has a `ref` parameter and the other has an `out` parameter. The following code, for example, doesn't compile.
+
+```c#
+class CS0663_Example
+{
+    // Compiler error CS0663: "Cannot define overloaded 
+    // methods that differ only on ref and out".
+    public void SampleMethod(out int i) { }
+    public void SampleMethod(ref int i) { }
+}
+```
+
+However, methods can be overloaded when one method has a `ref` or `out` parameter and the other has a value parameter, as shown in the following example.
+
+```c#
+class RefOverloadExample
+{
+    public void SampleMethod(int i) { }
+    public void SampleMethod(ref int i) { }
+}
+```
+
+**Passing an argument by reference: An example**
+
+The previous examples pass value types by reference. You can also use the ref keyword to pass reference types by reference. Passing a reference type by reference enables the called method to replace the object to which the reference parameter refers in the caller. The storage location of the object is passed to the method as the value of the reference parameter. If you change the value in the storage location of the parameter (to point to a new object), you also change the storage location to which the caller refers. The following example passes an instance of a reference type as a ref parameter.
+
+```c#
+class RefExample2
+{
+    static void Main()
+    {
+        // Declare an instance of Product and display its initial values.
+        Product item = new Product("Fasteners", 54321);
+        System.Console.WriteLine("Original values in Main.  Name: {0}, ID: {1}\n",
+            item.ItemName, item.ItemID);
+
+        // Pass the product instance to ChangeByReference.
+        ChangeByReference(ref item);
+        System.Console.WriteLine("Back in Main.  Name: {0}, ID: {1}\n",
+            item.ItemName, item.ItemID);
+    }
+
+    static void ChangeByReference(ref Product itemRef)
+    {
+        // Change the address that is stored in the itemRef parameter.   
+        itemRef = new Product("Stapler", 99999);
+
+        // You can change the value of one of the properties of
+        // itemRef. The change happens to item in Main as well.
+        itemRef.ItemID = 12345;
+    }
+}
+
+class Product
+{
+    public Product(string name, int newID)
+    {
+        ItemName = name;
+        ItemID = newID;
+    }
+
+    public string ItemName { get; set; }
+    public int ItemID { get; set; }
+}
+// Output: 
+//        Original values in Main.  Name: Fasteners, ID: 54321
+//    
+//        Back in Main.  Name: Stapler, ID: 12345
+```
