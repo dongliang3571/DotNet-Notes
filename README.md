@@ -333,6 +333,23 @@ public class ReadOnlyTest
 */
 ```
 
+**`const`**
+
+You use the `const` keyword to declare a constant field or a constant local. Constant fields and locals aren't variables and may not be modified. Constants can be numbers, Boolean values, strings, or a null reference. Don’t create a constant to represent information that you expect to change at any time. For example, don’t use a constant field to store the price of a service, a product version number, or the brand name of a company. These values can change over time, and because compilers propagate constants, other code compiled with your libraries will have to be recompiled to see the changes
+
+`const` implies `static` (you don't need an instance to reference the const value).
+
+I want to also add this important point: When you link against (reference) an assembly with a public const, that value is copied into your assembly. So if the const value in the referenced assembly changes, your assembly will still have the originally compiled-in value.
+
+If this behavior is not acceptable, then you should consider making the field a `public static readonly` field.
+
+```c#
+public class Foo {
+    public const int HATS = 42;
+    public static readonly int GLOVES = 33;
+}
+```
+
 ### Polymorphism
 
 - A class can be used as its own type, cast to any base types or interface types it implements. 
