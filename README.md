@@ -1112,3 +1112,7 @@ public class Example
 // The example displays the following output:
 //       Converted '1640' to 1640
 ```
+
+### Asynchronous programming with async and await (C#)
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/index
