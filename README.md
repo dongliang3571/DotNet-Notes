@@ -995,3 +995,120 @@ class Product
 //    
 //        Back in Main.  Name: Stapler, ID: 12345
 ```
+
+**`out`**
+
+The `out` keyword causes arguments to be passed by reference. It is like the ref keyword, except that ref requires that the variable be initialized before it is passed. To use an `out` parameter, both the method definition and the calling method must explicitly use the out keyword. For example:
+
+```c#
+using System;
+
+class OutExample
+{
+   static void Method(out int i)
+   {
+      i = 44;
+   }
+   
+   static void Main()
+   {
+      int value;
+      Method(out value);
+      Console.WriteLine(value);     // value is now 44
+   }
+}
+```
+
+**Declaring `out` arguments**
+
+Declaring a method with out arguments is useful when you want a method to return multiple values. The following example uses out to return three variables with a single method call. Note that the third argument is assigned to null. This enables methods to return values optionally
+
+```c#
+class OutReturnExample
+{
+    static void Method(out int i, out string s1, out string s2)
+    {
+        i = 44;
+        s1 = "I've been returned";
+        s2 = null;
+    }
+
+    static void Main()
+    {
+        int value;
+        string str1, str2;
+        Method(out value, out str1, out str2);
+        // value is now 44
+        // str1 is now "I've been returned"
+        // str2 is (still) null;
+    }
+}
+```
+
+The **Try pattern**(`Int32.TryParse(string str, out int val)`) involves returning a `bool` to indicate whether an operation succeeded and failed, and returning the value produced by the operation in an `out` argument. A number of parsing methods, such as the DateTime.TryParse method, use this pattern
+
+**Calling a method with an `out` argument**
+
+In C# 6 and earlier, you must declare a variable in a separate statement before you pass it as an out argument. The following example declares a variable named number before it is passed to the Int32.TryParse method, which attempts to convert a string to a number.
+
+```c#
+using System;
+
+public class Example
+{
+   public static void Main()
+   {
+      string value = "1640";
+
+      int number;
+      if (Int32.TryParse(value, out number))
+         Console.WriteLine($"Converted '{value}' to {number}");
+      else
+         Console.WriteLine($"Unable to convert '{value}'");   
+   }
+}
+// The example displays the following output:
+//       Converted '1640' to 1640
+```
+
+Starting with C# 7, you can declare the out variable in the argument list of the method call, rather than in a separate variable declaration. This produces more compact, readable code, and also prevents you from inadvertently assigning a value to the variable before the method call. The following example is like the previous example, except that it defines the number variable in the call to the Int32.TryParse method.
+
+```c#
+using System;
+
+public class Example
+{
+   public static void Main()
+   {
+      string value = "1640";
+
+      if (Int32.TryParse(value, out int number))
+         Console.WriteLine($"Converted '{value}' to {number}");
+      else
+         Console.WriteLine($"Unable to convert '{value}'");   
+   }
+}
+// The example displays the following output:
+//       Converted '1640' to 1640
+```
+
+In the previous example, the number variable is strongly typed as an int. You can also declare an implicitly typed local variable, as the following example does.
+
+```c#
+using System;
+
+public class Example
+{
+   public static void Main()
+   {
+      string value = "1640";
+
+      if (Int32.TryParse(value, out var number))
+         Console.WriteLine($"Converted '{value}' to {number}");
+      else
+         Console.WriteLine($"Unable to convert '{value}'");   
+   }
+}
+// The example displays the following output:
+//       Converted '1640' to 1640
+```
