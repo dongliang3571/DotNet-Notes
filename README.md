@@ -61,11 +61,23 @@ To be object oriented, a language is designed around the concept of objects. tha
   
 Structs do not support inheritance, but they can implement interfaces. For more information, see [Interfaces]https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/index).
 
-**Override, Virtual**
+**`override`, `virtual`**
 
 If a member class or member variable need to be overidden, you need to have keyword `virtual` in the memeber variable or method in the base class, and `override` is needed in derived class in order to override an variable or method.
 
 This example defines a base class named `Employee`, and a derived class named `SalesEmployee`. The `SalesEmployee` class includes an extra property, `salesbonus`, and overrides the method `CalculatePay` in order to take it into account.
+
+An override method provides a new implementation of a member that is inherited from a base class. The method that is overridden by an override declaration is known as the overridden base method. The overridden base method must have the same signature as the override method. For information about inheritance, see Inheritance.
+
+You cannot use the virtual modifier with the static, abstract, private, or override modifiers. The following example shows a virtual property
+
+You cannot override a non-virtual or static method. The overridden base method must be `virtual`, `abstract`, or `override`.
+
+An `override` declaration cannot change the accessibility of the `virtual` method. Both the `override` method and the `virtual` method must have the same access level modifier(`public`, `private`, etc.).
+
+You cannot use the `new`, `static`, or `virtual` modifiers to modify an override method.
+
+An overriding property declaration must specify exactly the same access modifier, type, and name as the inherited property, and the overridden property must be `virtual`, `abstract`, or `override`.
 
 ```c#
 class TestOverride
@@ -134,9 +146,29 @@ class TestOverride
 */
 ```
 
-**abstract**
+**`abstract`**
 
 The `abstract` modifier indicates that the thing being modified has a missing or incomplete implementation. The abstract modifier can be used with classes, methods, properties, indexers, and events. Use the `abstract` modifier in a class declaration to indicate that a class is intended only to be a base class of other classes. Members marked as abstract, or included in an abstract class, must be implemented by classes that derive from the abstract class.
+
+Abstract classes have the following features:
+
+  - An abstract class cannot be instantiated.
+
+  - An abstract class may contain abstract methods and accessors.
+
+  - It is not possible to modify an abstract class with the sealed modifier because the two modifers have opposite meanings. The `sealed` modifier prevents a class from being inherited and the `abstract` modifier requires a class to be inherited.
+
+  - A non-abstract class derived from an abstract class must include actual implementations of all inherited abstract methods and accessors.
+
+  - Use the `abstract` modifier in a method or property declaration to indicate that the method or property does not contain implementation.
+
+  - Abstract methods have the following features:
+
+  - An abstract method is implicitly a virtual method.
+
+  - Abstract method declarations are only permitted in abstract classes.
+
+  - Because an abstract method declaration provides no actual implementation, there is no method body; the method declaration simply ends with a semicolon and there are no curly braces ({ }) following the signature. For example:
 
 In this example, the class `Square` must provide an implementation of `Area` because it derives from `ShapesClass`:
 
