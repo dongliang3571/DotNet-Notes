@@ -255,6 +255,84 @@ It is an error to use the abstract modifier with a sealed class, because an abst
 
 structs are implicitly sealed, they cannot be inherited.
 
+**`readonly`**
+
+The `readonly` keyword is a modifier that you can use on fields. When a field declaration includes a `readonly` modifier, assignments to the fields introduced by the declaration can only occur as part of the declaration or in a constructor in the same class.
+
+In this example, the value of the field year cannot be changed in the method ChangeYear, even though it is assigned a value in the class constructor:
+
+```c#
+class Age
+{
+    readonly int _year;
+    Age(int year)
+    {
+        _year = year;
+    }
+    void ChangeYear()
+    {
+        //_year = 1967; // Compile error if uncommented.
+    }
+}
+```
+
+You can assign a value to a readonly field only in the following contexts:
+
+ - When the variable is initialized in the declaration, for example:
+ 
+   ```
+   public readonly int y = 5; 
+   ```
+ - For an instance field, in the instance constructors of the class that contains the field declaration, or for a static field, in the static constructor of the class that contains the field declaration. These are also the only contexts in which it is valid to pass a readonly field as an out or ref parameter.
+
+**Note:**
+
+The `readonly` keyword is different from the `const` keyword. A `const` field can only be initialized at the declaration of the field. A `readonly` field can be initialized either at the declaration or in a constructor. Therefore, `readonly` fields can have different values depending on the constructor used. Also, while a `const` field is a compile-time constant, the `readonly` field can be used for runtime constants as in the following example:
+
+```c#
+public static readonly uint timeStamp = (uint)DateTime.Now.Ticks; 
+```
+
+```c#
+public class ReadOnlyTest
+{
+   class SampleClass
+   {
+      public int x;
+      // Initialize a readonly field
+      public readonly int y = 25;
+      public readonly int z;
+
+      public SampleClass()
+      {
+         // Initialize a readonly instance field
+         z = 24;
+      }
+
+      public SampleClass(int p1, int p2, int p3)
+      {
+         x = p1;
+         y = p2;
+         z = p3;
+      }
+   }
+
+   static void Main()
+   {
+      SampleClass p1 = new SampleClass(11, 21, 32);   // OK
+      Console.WriteLine("p1: x={0}, y={1}, z={2}", p1.x, p1.y, p1.z);
+      SampleClass p2 = new SampleClass();
+      p2.x = 55;   // OK
+      Console.WriteLine("p2: x={0}, y={1}, z={2}", p2.x, p2.y, p2.z);
+   }
+}
+/*
+ Output:
+    p1: x=11, y=21, z=32
+    p2: x=55, y=25, z=24
+*/
+```
+
 ### Polymorphism
 
 - A class can be used as its own type, cast to any base types or interface types it implements. 
