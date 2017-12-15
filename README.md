@@ -67,6 +67,10 @@ If a member class or member variable need to be overidden, you need to have keyw
 
 This example defines a base class named `Employee`, and a derived class named `SalesEmployee`. The `SalesEmployee` class includes an extra property, `salesbonus`, and overrides the method `CalculatePay` in order to take it into account.
 
+It is an error to use the `virtual` modifier on a static property
+
+A virtual inherited property can be overridden in a derived class by including a property declaration that uses the `override` modifier.
+
 An override method provides a new implementation of a member that is inherited from a base class. The method that is overridden by an override declaration is known as the overridden base method. The overridden base method must have the same signature as the override method. For information about inheritance, see Inheritance.
 
 You cannot use the virtual modifier with the static, abstract, private, or override modifiers. The following example shows a virtual property
@@ -210,6 +214,46 @@ class Square : ShapesClass
 }
 // Output: Area of the square = 144
 ```
+
+**`sealed`**
+
+When applied to a class, the sealed modifier prevents other classes from inheriting from it. In the following example, class B inherits from class A, but no class can inherit from class B.
+
+```c#
+class A {}      
+sealed class B : A {}
+```
+
+You can also use the `sealed` modifier on a method or property that overrides a virtual method or property in a base class. This enables you to allow classes to derive from your class and prevent them from overriding specific virtual methods or properties
+
+In the following example, `Z` inherits from `Y` but `Z` cannot override the virtual function `F` that is declared in `X` and sealed in `Y`.
+
+```c#
+class X
+{
+    protected virtual void F() { Console.WriteLine("X.F"); }
+    protected virtual void F2() { Console.WriteLine("X.F2"); }
+}
+class Y : X
+{
+    sealed protected override void F() { Console.WriteLine("Y.F"); }
+    protected override void F2() { Console.WriteLine("Y.F2"); }
+}
+class Z : Y
+{
+    // Attempting to override F causes compiler error CS0239.
+    // protected override void F() { Console.WriteLine("C.F"); }
+
+    // Overriding F2 is allowed.
+    protected override void F2() { Console.WriteLine("Z.F2"); }
+}
+```
+
+When you define new methods or properties in a class, you can prevent deriving classes from overriding them by not declaring them as virtual.
+
+It is an error to use the abstract modifier with a sealed class, because an abstract class must be inherited by a class that provides an implementation of the abstract methods or properties.
+
+structs are implicitly sealed, they cannot be inherited.
 
 ### Polymorphism
 
