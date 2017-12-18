@@ -1213,8 +1213,8 @@ string a = "hello";
 string b = "h";  
 // Append to contents of 'b'  
 b += "ello";  
-Console.WriteLine(a == b);  
-Console.WriteLine((object)a == (object)b);
+Console.WriteLine(a == b);  // Return True
+Console.WriteLine((object)a == (object)b);  // return False
 ```
 
 This displays "True" and then "False" because the content of the strings are equivalent, but a and b do not refer to the same string instance.
