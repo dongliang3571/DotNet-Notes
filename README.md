@@ -1273,3 +1273,7 @@ To include a double quotation mark in an @-quoted string, double it:
 ```
 
 Another use of the @ symbol is to use referenced (/reference) identifiers that are C# keywords.
+
+**Best practices for using strings**
+
+https://docs.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings
