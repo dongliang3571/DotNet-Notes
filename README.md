@@ -765,7 +765,30 @@ They are equivalent to the following declarations:
 class Moon { }
 ```
 
-Partial Methods:
+**Inheritance in partial class**
+
+That's a single class defined across multiple declarations, not two different classes. You only need to define the inheritance model in a single declaration, e.g.:
+
+```c#
+public class Foo { }
+
+//Bar extends Foo
+public partial class Bar : Foo { }
+
+public partial class Bar {  }
+```
+
+However, if you were to try the following, you'd generate a compiler error of "Partial declarations of 'Bar' must not specify different base classes":
+
+```c#
+public class Foo { }
+
+public partial class Bar : Foo { }
+
+public partial class Bar : object {  }
+```
+
+**Partial Methods:**
 
 A partial class or struct may contain partial methods. A partial method must be declared in one of the partial classes. A partial method may or may not have an implementation. If the partial method doesn't have an implementation in any part then the compiler will not generate that method in the final class. For example, consider the following partial method with a partial keyword:
 
