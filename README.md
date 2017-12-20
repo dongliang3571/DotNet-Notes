@@ -1,8 +1,16 @@
 # C-Sharp-Notes
 
-### .NET Core, .NET Standard
+### .NET Standard, .NET Core and .NET Framework 
 
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
+
+Creative answer
+
+```c#
+IAnimal == .NetStandard (General)
+IBird == .NetCore (Less General)
+IEagle == .NetFramework (Specific / oldest and has the most features)
+```
 
 ### C Sharp Documentation
 
