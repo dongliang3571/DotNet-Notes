@@ -2,6 +2,16 @@
 
 https://mva.microsoft.com/en-us/training-courses/programming-in-c-jump-start-14254?l=j0iuozSfB_6900115888
 
+### Package Management
+
+
+**An introduction to NuGet**
+
+https://docs.microsoft.com/en-us/nuget/what-is-nuget
+
+An essential tool for any modern development platform is a mechanism through which developers can create, share, and consume useful libraries of code. Such libraries are typically referred to as "packages" because they can contain compiled code (as DLLs) along with other content that might be needed in the projects that consume those libraries.+
+
+For .NET, the mechanism for sharing code is **NuGet**, which defines how packages for .NET are created, hosted, and consumed, and provides the tools for each of those roles.
 
 ### What is an Object?
 
