@@ -1,5 +1,11 @@
 # C-Sharp-Notes
 
+### .NET Core, .NET Standard
+
+https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
+
+### C Sharp Documentation
+
 https://mva.microsoft.com/en-us/training-courses/programming-in-c-jump-start-14254?l=j0iuozSfB_6900115888
 
 ### Package Management
