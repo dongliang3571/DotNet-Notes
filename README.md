@@ -1324,3 +1324,7 @@ Another use of the @ symbol is to use referenced (/reference) identifiers that a
 **Best practices for using strings**
 
 https://docs.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings
+
+### C# Singleton. `lock` keyword
+
+http://csharpindepth.com/Articles/General/Singleton.aspx
