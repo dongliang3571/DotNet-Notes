@@ -27,6 +27,11 @@ An essential tool for any modern development platform is a mechanism through whi
 
 For .NET, the mechanism for sharing code is **NuGet**, which defines how packages for .NET are created, hosted, and consumed, and provides the tools for each of those roles.
 
+### Entity Framework - Object-Relational Mapper (ORM)
+
+https://msdn.microsoft.com/en-us/library/gg696172(v=vs.103).aspx
+https://www.codeproject.com/Articles/363040/An-Introduction-to-Entity-Framework-for-Absolute-B
+
 ### What is an Object?
 
 - An object typically models a concept: – An object usually “is” something –i.e. a customer
