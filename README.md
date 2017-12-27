@@ -1182,6 +1182,48 @@ public class Example
 //       Converted '1640' to 1640
 ```
 
+### Delegate
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/how-to-declare-instantiate-and-use-a-delegate
+
+In C# 1.0 and later, delegates can be declared as shown in the following example.
+
+```c#
+// Declare a delegate.
+delegate void Del(string str);
+
+// Declare a method with the same signature as the delegate.
+static void Notify(string name)
+{
+    Console.WriteLine("Notification received for: {0}", name);
+}
+
+// Create an instance of the delegate.
+Del del1 = new Del(Notify);
+```
+
+C# 2.0 provides a simpler way to write the previous declaration, as shown in the following example.
+
+```c#
+// C# 2.0 provides a simpler way to declare an instance of Del.
+Del del2 = Notify;
+```
+
+In C# 2.0 and later, it is also possible to use an anonymous method to declare and initialize a delegate, as shown in the following example.
+
+```c#
+// Instantiate Del by using an anonymous method.
+Del del3 = delegate(string name)
+    { Console.WriteLine("Notification received for: {0}", name); };
+```
+
+In C# 3.0 and later, delegates can also be declared and instantiated by using a lambda expression, as shown in the following example
+
+```c#
+// Instantiate Del by using a lambda expression.
+Del del4 = name =>  { Console.WriteLine("Notification received for: {0}", name); };
+```
+
 ### Asynchronous programming with async and await (C#)
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/index
