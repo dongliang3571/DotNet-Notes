@@ -1,5 +1,25 @@
 # C-Sharp-Notes
 
+### Problems frequently apprear
+
+**1.**
+
+```
+// When use this line to check if services has started, make sure you intialization takes less than the TimeSpan you defined
+controller.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
+```
+
+you might often see:
+
+  - Service start() failed: Time out has expired and the operation has not been completed.
+  - Cannot start service <service_name> on computer '.'.
+  - Error 1053: The service did not respond to the start or control request in a timely fashion (when you start it on service manager)
+
+Solution:
+
+  - Remove that line of code 
+  - or make sure intialization takes less than the timespan you defined
+
 ### .NET Standard, .NET Core and .NET Framework 
 
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
