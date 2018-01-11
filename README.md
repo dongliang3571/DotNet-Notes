@@ -20,6 +20,12 @@ Solution:
   - Remove that line of code 
   - or make sure intialization takes less than the timespan you defined
 
+**2.**
+
+The "obj" folder is used to store temporary object files and other files used in order to create the final binary during the compilation process.
+
+The "bin" folder is the output folder for complete binaries (assemblies).
+
 ### .NET Standard, .NET Core and .NET Framework 
 
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
