@@ -1212,6 +1212,20 @@ public class Example
 //       Converted '1640' to 1640
 ```
 
+### Optional Arguments
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/named-and-optional-arguments
+
+The definition of a method, constructor, indexer, or delegate can specify that its parameters are required or that they are optional. Any call must provide arguments for all required parameters, but can omit arguments for optional parameters.
+
+Each optional parameter has a default value as part of its definition. If no argument is sent for that parameter, the default value is used. A default value must be one of the following types of expressions:
+
+  - a constant expression;
+
+  - an expression of the form new ValType(), where ValType is a value type, such as an enum or a struct;
+
+  - an expression of the form default(ValType), where ValType is a value type.
+
 ### Delegate
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/how-to-declare-instantiate-and-use-a-delegate
@@ -1405,3 +1419,184 @@ https://docs.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strin
 ### C# Singleton. `lock` keyword
 
 http://csharpindepth.com/Articles/General/Singleton.aspx
+
+### default value expressions
+
+A default value expression produces the default value for a type. Default value expressions are particularly useful in generic classes and methods. One issue that arises using generics is how to assign a default value to a parameterized type `T` when you do not know the following in advance:
+
+  - Whether `T` is a reference type or a value type.
+  - If `T` is a value type, whether is a numeric value or a user-defined struct.
+
+Given a variable t of a parameterized type T, the statement t = null is only valid if T is a reference type. The assignment t = 0 only works for numeric value types but not for structs. The solution is to use a default value expression, which returns null for reference types (class types and interface types) and zero for numeric value types. For user-defined structs, it returns the struct initialized to the zero bit pattern, which produces 0 or null for each member depending on whether that member is a value or reference type. For nullable value types, default returns a `System.Nullable<T>`, which is initialized like any struct.
+  
+The `default(T)` expression is not limited to generic classes and methods. Default value expressions can be used with any managed type. Any of these expressions are valid:
+
+```c#
+var s = default(string);
+var d = default(dynamic);
+var i = default(int);
+var n = default(int?); // n is a Nullable int where HasValue is false.
+```
+
+The following example from the `GenericList<T>` class shows how to use the `default(T)` operator in a generic class. For more information, see Generics Overview.
+
+```c#
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Test with a non-empty list of integers.
+            GenericList<int> gll = new GenericList<int>();
+            gll.AddNode(5);
+            gll.AddNode(4);
+            gll.AddNode(3);
+            int intVal = gll.GetLast();
+            // The following line displays 5.
+            System.Console.WriteLine(intVal);
+
+            // Test with an empty list of integers.
+            GenericList<int> gll2 = new GenericList<int>();
+            intVal = gll2.GetLast();
+            // The following line displays 0.
+            System.Console.WriteLine(intVal);
+
+            // Test with a non-empty list of strings.
+            GenericList<string> gll3 = new GenericList<string>();
+            gll3.AddNode("five");
+            gll3.AddNode("four");
+            string sVal = gll3.GetLast();
+            // The following line displays five.
+            System.Console.WriteLine(sVal);
+
+            // Test with an empty list of strings.
+            GenericList<string> gll4 = new GenericList<string>();
+            sVal = gll4.GetLast();
+            // The following line displays a blank line.
+            System.Console.WriteLine(sVal);
+        }
+    }
+
+    // T is the type of data stored in a particular instance of GenericList.
+    public class GenericList<T>
+    {
+        private class Node
+        {
+            // Each node has a reference to the next node in the list.
+            public Node Next;
+            // Each node holds a value of type T.
+            public T Data;
+        }
+
+        // The list is initially empty.
+        private Node head = null;
+
+        // Add a node at the beginning of the list with t as its data value.
+        public void AddNode(T t)
+        {
+            Node newNode = new Node();
+            newNode.Next = head;
+            newNode.Data = t;
+            head = newNode;
+        }
+
+        // The following method returns the data value stored in the last node in
+        // the list. If the list is empty, the default value for type T is
+        // returned.
+        public T GetLast()
+        {
+            // The value of temp is returned as the value of the method. 
+            // The following declaration initializes temp to the appropriate 
+            // default value for type T. The default value is returned if the 
+            // list is empty.
+            T temp = default(T);
+
+            Node current = head;
+            while (current != null)
+            {
+                temp = current.Data;
+                current = current.Next;
+            }
+            return temp;
+        }
+    }
+}
+```
+
+**default literal and type inference**
+
+Beginning with C# 7.1, the default literal can be used for default value expressions when the compiler can infer the type of the expression. The default literal produces the same value as the equivalent default(T) where T is the inferred type. This can make code more concise by reducing the redundancy of declaring a type more than once. The default literal can be used in any of the following locations:
+
+  - variable initializer
+  - variable assignment
+  - declaring the default value for an optional parameter
+  - providing the value for a method call argument
+  - return statement (or expression in an expression bodied member)
+  
+The following example shows many usages of the default literal in a default value expression
+
+```c#
+public class Point
+{
+    public double X { get; }
+    public double Y { get; }
+
+    public Point(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
+}
+
+public class LabeledPoint
+{
+    public double X { get; private set; }
+    public double Y { get; private set; }
+    public string Label { get; set; }
+
+    // Providing the value for a default argument:
+    public LabeledPoint(double x, double y, string label = default)
+    {
+        X = x;
+        Y = y;
+        this.Label = label;
+    }
+
+    public static LabeledPoint MovePoint(LabeledPoint source, 
+        double xDistance, double yDistance)
+    {
+        // return a default value:
+        if (source == null)
+            return default;
+
+        return new LabeledPoint(source.X + xDistance, source.Y + yDistance, 
+        source.Label);
+    }
+
+    public static LabeledPoint FindClosestLocation(IEnumerable<LabeledPoint> sequence, 
+        Point location)
+    {
+        // initialize variable:
+        LabeledPoint rVal = default;
+        double distance = double.MaxValue;
+
+        foreach (var pt in sequence)
+        {
+            var thisDistance = Math.Sqrt((pt.X - location.X) * (pt.X - location.X) +
+                (pt.Y - location.Y) * (pt.Y - location.Y));
+            if (thisDistance < distance)
+            {
+                distance = thisDistance;
+                rVal = pt;
+            }
+        }
+
+        return rVal;
+    }
+
+    public static LabeledPoint ClosestToOrigin(IEnumerable<LabeledPoint> sequence)
+        // Pass default value of an argument.
+        => FindClosestLocation(sequence, default);
+}
+```
