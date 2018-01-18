@@ -44,7 +44,6 @@ https://mva.microsoft.com/en-us/training-courses/programming-in-c-jump-start-142
 
 ### Package Management
 
-
 **An introduction to NuGet**
 
 https://docs.microsoft.com/en-us/nuget/what-is-nuget
@@ -52,6 +51,47 @@ https://docs.microsoft.com/en-us/nuget/what-is-nuget
 An essential tool for any modern development platform is a mechanism through which developers can create, share, and consume useful libraries of code. Such libraries are typically referred to as "packages" because they can contain compiled code (as DLLs) along with other content that might be needed in the projects that consume those libraries.+
 
 For .NET, the mechanism for sharing code is **NuGet**, which defines how packages for .NET are created, hosted, and consumed, and provides the tools for each of those roles.
+
+### Configurations, `appSettings`, `applicationSettings`
+
+https://msdn.microsoft.com/en-us/library/ms228154(v=vs.100).aspx
+
+```xml
+  <appSettings>
+    <add key="key1" value="value"/>
+    <add key="key2" value="5000"/>
+  </appSettings>
+  <applicationSettings>
+    <SFCasesSvc.Properties.Settings>
+      <setting name="value1" serializeAs="String">
+        <value>http://something1/</value>
+      </setting>
+      <setting name="value2" serializeAs="String">
+        <value>http://something2/</value>
+      </setting>
+      <setting name="value3" serializeAs="String">
+        <value>http://something3/</value>
+      </setting>
+      <setting name="value4" serializeAs="String">
+        <value>http://something4/</value>
+      </setting>
+    </SFCasesSvc.Properties.Settings>
+  </applicationSettings>
+  <userSettings>
+    <SFCasesSvc.Properties.Settings>
+      <setting name="somename" serializeAs="String">
+        <value>http://something4/</value>
+      </setting>
+      <setting name="somename" serializeAs="String">
+        <value />
+      </setting>
+    </SFCasesSvc.Properties.Settings>
+  </userSettings>
+```
+
+**using application settings and user settings**
+
+https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/using-application-settings-and-user-settings
 
 ### Entity Framework - Object-Relational Mapper (ORM)
 
