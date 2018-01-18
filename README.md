@@ -26,6 +26,41 @@ The "obj" folder is used to store temporary object files and other files used in
 
 The "bin" folder is the output folder for complete binaries (assemblies).
 
+**3.**
+
+`List<T>.Add(T)`
+
+`.Add(T)` will only add references of objects. there if original obj was changed, element in the List changes as well
+
+```c#
+class Animal
+{
+    public int age;
+    public Animal(int age)
+    {
+        this.age = age; 
+    }
+}
+
+class Program
+{
+    public static void Main(string[] args)
+    {
+        Animal one = new Animal(4);
+        List<Animal> ani = new List<Animal>();
+        ani.Add(one);
+        
+        Console.WriteLine(one.age); // output: 4
+        Console.WriteLine(ani[0].age); // output: 4
+        
+        one.age = 5;
+        
+        Console.WriteLine(one.age); // output: 5
+        Console.WriteLine(ani[0].age); // output: 5
+    }
+}
+```
+  
 ### .NET Standard, .NET Core and .NET Framework 
 
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
