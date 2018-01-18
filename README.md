@@ -93,6 +93,73 @@ https://msdn.microsoft.com/en-us/library/ms228154(v=vs.100).aspx
 
 https://docs.microsoft.com/en-us/dotnet/framework/winforms/advanced/using-application-settings-and-user-settings
 
+**How `App.Debug.config`, `App.Release.config` work**
+
+For example, you have Three files, `App.config`, `App.Debug.config`, and `App.Release.config`
+
+`App.config`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="5000"/>
+    <add key="key2" value="5000"/>
+  </appSettings>
+</configuration>
+```
+
+`App.Debug.config`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="900000" xdt:Transform="Replace" xdt:Locator="Match(key)"/>
+    <add key="key2" value="5000"/>
+  </appSettings>
+</configuration>
+```
+
+`App.Release.config`
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="800000" xdt:Transform="Replace" xdt:Locator="Match(key)"/>
+    <add key="key2" value="5000"/>
+  </appSettings>
+</configuration>
+```
+
+When it's in Debug mode, the final generated config file aka. `ProjectName.exe.config` will have
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="900000"/> <-- it's replaced by DEBUG value -->
+    <add key="key2" value="5000"/>
+  </appSettings>
+</configuration>
+```
+
+When it's in Release mode, the final generated config file aka. `ProjectName.exe.config` will have
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="key1" value="800000"/> <-- it's replaced by Release value -->
+    <add key="key2" value="5000"/>
+  </appSettings>
+</configuration>
+```
+
+Note: `xdt:Transform="Replace"` is called transformation syntax, see also https://msdn.microsoft.com/en-us/library/dd465326(v=vs.110).aspx
+
+
 ### Entity Framework - Object-Relational Mapper (ORM)
 
 https://msdn.microsoft.com/en-us/library/gg696172(v=vs.103).aspx
