@@ -1893,3 +1893,29 @@ public class LabeledPoint
         => FindClosestLocation(sequence, default);
 }
 ```
+
+### Interface
+
+**Difference between implement interface implicitly and explicitly**
+
+Basically:
+
+Implicit: you access the interface methods and properties as if they were part of the class.
+Explicit: you can only access methods and properties when treating the class as the implemented interface.
+Code examples:
+
+Implicit:
+
+```c#
+Test t = new Test();
+t.Id; // OK
+((ITest)t).Id; // OK
+```
+
+Explicit:
+
+```c#
+Test t = new Test();
+t.Id; // Not OK
+((ITest)t).Id; // OK
+```
