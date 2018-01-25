@@ -1919,3 +1919,71 @@ Test t = new Test();
 t.Id; // Not OK
 ((ITest)t).Id; // OK
 ```
+
+### Extension methods
+
+The following example shows an extension method defined for the System.String class. Note that it is defined inside a non-nested, non-generic static class:
+
+```c#
+namespace ExtensionMethods
+{
+    public static class MyExtensions
+    {
+        public static int WordCount(this String str)
+        {
+            return str.Split(new char[] { ' ', '.', '?' }, 
+                             StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+    }   
+}
+```
+
+**Inheritance with extension method**
+
+```c#
+//Rextester.Program.Main is the entry point for your code. Don't change it.
+//Compiler version 4.0.30319.17929 for Microsoft (R) .NET Framework 4.5
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+namespace Rextester
+{
+    class Te
+    {
+        
+    }
+    
+    static class Test
+    {
+        public static void extend(this Te source) // add a extension method to Te
+        {
+            Console.WriteLine("Extend");
+        }
+    }
+    
+    class Tes: Te // subclass from Te
+    {
+        public void extend<T>() // create a method with same name but it's generic
+        {
+            Console.WriteLine("Extendddddddddddddddddddddddddd");
+        }
+    }
+    public class Program
+    {
+        public static void Main(string[] args)
+        {   
+            Te test1 = new Te();
+            test1.extend(); // outputs: Extend
+            
+            Tes test2 = new Tes();
+            test2.extend(); // outputs: Extend
+            test2.extend<int>(); // outputs: Extendddddddddddddddddddddddddd
+        }
+    }
+    
+    
+}
+```
