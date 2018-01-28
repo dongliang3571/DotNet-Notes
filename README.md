@@ -1,6 +1,6 @@
 # C-Sharp-Notes
 
-### Problems frequently apprear
+### Problems frequently Occur
 
 **1.**
 
