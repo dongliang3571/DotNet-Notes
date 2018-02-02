@@ -551,6 +551,15 @@ public class Foo {
 }
 ```
 
+**static constructor**
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors
+
+
+static contructor is thread safe
+
+http://team4talent.be/Blog/Article/e698fb20-3003-4b28-a063-28bfbca8a5f4
+
 ### Polymorphism
 
 - A class can be used as its own type, cast to any base types or interface types it implements. 
