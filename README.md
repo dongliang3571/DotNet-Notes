@@ -560,6 +560,64 @@ static contructor is thread safe
 
 http://team4talent.be/Blog/Article/e698fb20-3003-4b28-a063-28bfbca8a5f4
 
+### Finalize Method and Destructors
+
+https://msdn.microsoft.com/library/0s71x931(v=vs.110).aspx
+
+ - Destructors cannot be defined in structs. They are only used with classes.
+
+ - A class can only have one destructor.
+
+ - Destructors cannot be inherited or overloaded.
+
+ - Destructors cannot be called. They are invoked automatically.
+
+ - A destructor does not take modifiers or have parameters.
+
+**Example**
+
+The following example creates three classes that make a chain of inheritance. The class First is the base class, Second is derived from First, and Third is derived from Second. All three have destructors. In Main(), an instance of the most-derived class is created. When the program runs, notice that the destructors for the three classes are called automatically, and in order, from the most-derived to the least-derived.
+
+```c#
+class First
+{
+    ~First()
+    {
+        System.Diagnostics.Trace.WriteLine("First's destructor is called.");
+    }
+}
+
+class Second : First
+{
+    ~Second()
+    {
+        System.Diagnostics.Trace.WriteLine("Second's destructor is called.");
+    }
+}
+
+class Third : Second
+{
+    ~Third()
+    {
+        System.Diagnostics.Trace.WriteLine("Third's destructor is called.");
+    }
+}
+
+class TestDestructors
+{
+    static void Main()
+    {
+        Third t = new Third();
+    }
+
+}
+/* Output (to VS Output Window):
+    Third's destructor is called.
+    Second's destructor is called.
+    First's destructor is called.
+*/
+```
+
 ### Polymorphism
 
 - A class can be used as its own type, cast to any base types or interface types it implements. 
