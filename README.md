@@ -564,6 +564,10 @@ http://team4talent.be/Blog/Article/e698fb20-3003-4b28-a063-28bfbca8a5f4
 
 https://msdn.microsoft.com/library/0s71x931(v=vs.110).aspx
 
+**Note:**
+
+Empty destructors should not be used. When a class contains a destructor, an entry is created in the Finalize queue. When the destructor is called, the garbage collector is invoked to process the queue. If the destructor is empty, this just causes a needless loss of performance.
+
  - Destructors cannot be defined in structs. They are only used with classes.
 
  - A class can only have one destructor.
