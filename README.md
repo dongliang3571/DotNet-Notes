@@ -897,6 +897,22 @@ It's also interesting to note what happens if Foo is in namespace `Outer`, rathe
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/index
 
+**Difference between attribute and interface**
+
+A long time ago in a galaxy far, far away... There were no Attributes or compiler support for class metadata, so the developers tried to implement their own. One of the methods our ancestors worked out were to declare Marker Interfaces .
+
+So, to answer your question: custom attributes are an "evolution" of marker interfaces. You can use both. But note that, if you want to enforce that your object implement specific methods, you are using an interface, plain and simple. That's how IDisposable works, it forces you to implement a method named Dispose(). [Serializable] (and probably ISerializable on your C++ example) does not force you to implement anything, as the runtime will just read that declaration and do its task (i.e., serialize the object).
+
+Note that C# also have a ISerializable interface... It is meant to let you write your custom serialization code, which will then be called by the runtime. Note that it is NOT a marker interface nor replacement for the [Serializable] attribute, as you still need to mark your class with the attribute for the serialization to work.
+
+**Marker interface**
+
+The marker interface pattern is a design pattern in computer science, used with languages that provide run-time type information about objects. It provides a means to associate metadata with a class where the language does not have explicit support for such metadata.
+
+To use this pattern, a class implements a marker interface[1] (also called tagging interface), and methods that interact with instances of that class test for the existence of the interface. Whereas a typical interface specifies functionality (in the form of method declarations) that an implementing class must support, a marker interface need not do so. The mere presence of such an interface indicates specific behavior on the part of the implementing class. Hybrid interfaces, which both act as markers and specify required methods, are possible but may prove confusing if improperly used.
+
+**An example of the application of marker interfaces from the Java programming language is the `Serializable` interface. A class implements this interface to indicate that its non-transient data members can be written to an `ObjectOutputStream`. The `ObjectOutputStream` private method `writeObject0(Object,boolean)` contains a series of `instanceof` tests to determine writeability, one of which looks for the `Serializable` interface. If any of these tests fails, the method throws a NotSerializableException.**
+
 ### Difference between struct and class in C sharp
 
 Use structs if:
