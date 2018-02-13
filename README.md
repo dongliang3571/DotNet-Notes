@@ -394,6 +394,43 @@ Employee ID: ABC567EFG
 */
 ```
 
+```c#
+abstract class A
+{
+    public A()
+    {
+        Console.WriteLine("Calling A");
+    }
+    
+    public static void cc()
+    {
+        Console.WriteLine("Calling static cc");
+    }
+    
+    public static B dd()
+    {
+        return new B();
+    }
+}
+
+class B: A
+{
+    public B()
+    {
+        Console.WriteLine("Calling B");
+    }
+}
+
+public void static Main(string[] args)
+{
+    B bInstance = A.dd(); // This will work
+}
+```
+
+Above example is useful in a standard library `[System.Net.WeRequest.Create()]`(https://docs.microsoft.com/en-us/dotnet/api/system.net.webrequest.create?view=netframework-4.7.1#System_Net_WebRequest_Create_System_String_)
+
+`System.Net.WeRequest` is an `abstract` class too, `System.Net.WeRequest.Create()` is a static method that returns `HttpWebRequest` which is subclass of `WeRequest`.
+
 ### Modifiers
 
 **`override`, `virtual`**
