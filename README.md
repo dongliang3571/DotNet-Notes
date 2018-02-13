@@ -260,7 +260,141 @@ To be object oriented, a language is designed around the concept of objects. tha
   - A class may inherit from a single base class
   - A class may implement zero or more Interface
   
-Structs do not support inheritance, but they can implement interfaces. For more information, see [Interfaces]https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/index).
+Structs do not support inheritance, but they can implement interfaces. For more information, see [Interfaces](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/index).
+
+**`base`**
+
+The `base` keyword is used to access members of the base class from within a derived class:
+
+  - Call a method on the base class that has been overridden by another method.
+
+  - Specify which base-class constructor should be called when creating instances of the derived class.
+
+A base class access is permitted only in a constructor, an instance method, or an instance property accessor.
+
+It is an error to use the base keyword from within a static method.
+
+**Calling base constructor**
+
+```c#
+class A
+{
+    public A()
+    {
+        Console.WriteLine("Calling A");
+    }
+}
+
+
+class B: A
+{
+    public B()
+    {
+        Console.WriteLine("Calling B");
+    }
+}
+
+public static void Main(string[] args)
+{
+    var n = new B();
+}
+
+// output:
+// Calling A
+// Calling B
+```
+
+Even if you don't use `base`, it still calls the default base class construct. However if you have more than one constructor, you can use `base` to call the one you want.
+
+```c#
+public class BaseClass
+{
+    int num;
+
+    public BaseClass()
+    {
+        Console.WriteLine("in BaseClass()");
+    }
+
+    public BaseClass(int i)
+    {
+        num = i;
+        Console.WriteLine("in BaseClass(int i)");
+    }
+
+    public int GetNum()
+    {
+        return num;
+    }
+}
+
+public class DerivedClass : BaseClass
+{
+    // This constructor will call BaseClass.BaseClass()
+    public DerivedClass() : base()
+    {
+    }
+
+    // This constructor will call BaseClass.BaseClass(int i)
+    public DerivedClass(int i) : base(i)
+    {
+    }
+
+    static void Main()
+    {
+        DerivedClass md = new DerivedClass();
+        DerivedClass md1 = new DerivedClass(1);
+    }
+}
+/*
+Output:
+in BaseClass()
+in BaseClass(int i)
+*/
+```
+
+Another example calling non-constructot menthods
+
+```c#
+public class Person
+{
+    protected string ssn = "444-55-6666";
+    protected string name = "John L. Malgraine";
+
+    public virtual void GetInfo()
+    {
+        Console.WriteLine("Name: {0}", name);
+        Console.WriteLine("SSN: {0}", ssn);
+    }
+}
+class Employee : Person
+{
+    public string id = "ABC567EFG";
+    public override void GetInfo()
+    {
+        // Calling the base class GetInfo method:
+        base.GetInfo();
+        Console.WriteLine("Employee ID: {0}", id);
+    }
+}
+
+class TestClass
+{
+    static void Main()
+    {
+        Employee E = new Employee();
+        E.GetInfo();
+    }
+}
+/*
+Output
+Name: John L. Malgraine
+SSN: 444-55-6666
+Employee ID: ABC567EFG
+*/
+```
+
+### Modifiers
 
 **`override`, `virtual`**
 
