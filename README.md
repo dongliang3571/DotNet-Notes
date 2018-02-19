@@ -1300,7 +1300,68 @@ Access modifiers are not allowed on namespaces. Namespaces have no access restri
 
 Depending on the context in which a member declaration occurs, only certain declared accessibilities are permitted. If no access modifier is specified in a member declaration, a default accessibility is used.
 
-Top-level types, which are not nested in other types, can only have `internal` or `public` accessibility. The default accessibility for these types is `internal`.
+The default access for everything in C# is **"the most restricted access you could declare for that member"**
+
+for example:
+
+```c#
+namespace MyCompany
+{
+    class Outer
+    {
+        void Foo() {}
+        class Inner {}
+    }
+}
+```
+
+is equivalent to
+
+```c#
+namespace MyCompany
+{
+    internal class Outer
+    {
+        private void Foo() {}
+        private class Inner {}
+    }
+}
+```
+
+The one sort of exception to this is making one part of a property (usually the setter) more restricted than the declared accessibility of the property itself:
+
+```c#
+public string Name
+{
+    get { ... }
+    private set { ... } // This isn't the default, have to do it explicitly
+}
+```
+
+**Top-level types**, which are not nested in other types, can only have `internal` or `public` accessibility. The default accessibility for these types is `internal`.
+
+Note: 
+
+**Top-level types are defined directly inside a namespac**
+
+```c#
+namespace Foo
+{
+    class Bar {} // top-level class
+}
+```
+
+**Nested types are defined inside another class or struct**
+
+```c#
+namespace Foo
+{
+    class Bar
+    {
+        class Baz {} // nested type
+    }
+}
+```
 
 Nested types, which are members of other types, can have declared accessibilities as indicated in the following table.
 
