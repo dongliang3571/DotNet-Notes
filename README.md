@@ -2117,6 +2117,12 @@ public MyClass Singleton
 }
 ```
 
+The `volatile` keyword will prevent the variable from being affected by possible compiler optimizations related to swapping write/read instructions and caching its value in processor registers.
+
+For performance reasons, it's not always a good solution to declare a variable as volatile. In that case, you can use the following methods to access the variable: 'Thread.VolatileRead', 'Thread.VolatileWrite', and 'Thread.MemoryBarrier'. These methods will put barriers for reading/writing memory only where necessary.
+
+Finally, you can implement "lazy initialization" using the Lazy<T> class, which was designed specifically for this purpose and is available in .NET starting with version 4.
+  
 ### default value expressions
 
 A default value expression produces the default value for a type. Default value expressions are particularly useful in generic classes and methods. One issue that arises using generics is how to assign a default value to a parameterized type `T` when you do not know the following in advance:
