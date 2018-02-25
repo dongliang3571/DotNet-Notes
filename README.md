@@ -2028,9 +2028,94 @@ Another use of the @ symbol is to use referenced (/reference) identifiers that a
 
 https://docs.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings
 
-### C# Singleton. `lock` keyword
+### C# Singleton. `lock` keyword, `volatile` keyword 
 
 http://csharpindepth.com/Articles/General/Singleton.aspx
+
+**Potentially unsafe double-checked locking. Use `volatile` variable(s) or synchronization primitives to avoid this.**
+
+https://www.viva64.com/en/w/v3054/
+
+The analyzer detected a possible error related to unsafe use of the "double-checked locking" pattern. This software design pattern is used to reduce the overhead of acquiring a lock by first testing the locking criterion without actually acquiring the lock. Only if the locking criterion check indicates that locking is required, does the actual locking logic proceed. That is, locking will be performed only if really needed.
+
+Consider the following example of unsafe implementation of this pattern in C#:
+
+```c#
+private MyClass _singleton = null;
+public MyClass Singleton
+{
+    get
+    {
+        if(_singleton == null)
+            lock(_locker)
+            {
+                if(_singleton == null)
+                {
+                    MyClass instance = new MyClass();
+                    instance.Initialize();
+                    _singleton = instance;
+                }
+            }
+        return _singleton;
+    }
+}
+```
+
+In this example, the pattern is used to implement "lazy initialization" – that is, initialization is delayed until a variable's value is needed for the first time. This code will work correctly in a program that uses a singleton object from one thread. To ensure safe initialization in a multithreaded program, a construct with the lock statement is usually used. However, it's not enough in our example.
+
+Note the call to method `Initialize()` of the 'Instance' object. When building the program in Release mode, the compiler may optimize this code and invert the order of assigning the value to the `_singleton` variable and calling to the `Initialize()` method. In that case, another thread accessing `Singleton` at the same time as the initializing thread may get access to the object before initialization is over.
+
+Here's another example of using the double-checked locking pattern:
+
+```c#
+private MyClass _singleton = null;
+bool _initialized = false;
+public MyClass Singleton;
+{
+    get
+    {
+        if(!_initialized)
+            lock(_locker)
+            {
+                if(!_initialized)
+                {
+                    _singleton = new MyClass();
+                    _initialized = true;
+                }
+            }
+        return _singleton;
+    }
+}
+```
+
+Like in the previous example, compiler optimization of the order of assigning values to variables `_singleton` and `_initialized` may cause errors. That is, the `_initialized` variable will be assigned the value 'true' first, and only then will a new object, `MyClass()`, be created and the reference to it be assigned to `_singleton`.
+
+Such inversion may cause an error when accessing the object from a parallel thread. It turns out that the '_singleton' variable will not be specified yet while the '_initialized' flag will be already set to 'true'.
+
+One of the dangers of these errors is the seeming correctness of the program's functioning. Such false impression occurs because this problem won't occur very often and will depend on the architecture of the processor used, CLR version, and so on.
+
+There are several ways to ensure thread-safety when using the pattern. The simplest way is to mark the variable checked in the if condition with the `volatile` keyword:
+
+```c#
+private volatile MyClass _singleton = null;
+public MyClass Singleton
+{
+    get
+    {
+        if(_singleton == null)
+            lock(_locker)
+            {
+                if(_singleton == null)
+                {
+                    MyClass instance = new MyClass();
+                    instance.Initialize();
+                    _singleton = instance;
+                }
+            }
+        return _singleton;
+    }
+}
+```
 
 ### default value expressions
 
