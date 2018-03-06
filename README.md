@@ -1064,6 +1064,59 @@ Some would argue that Math might be a bad name for a user-defined class, since t
 
 It's also interesting to note what happens if Foo is in namespace `Outer`, rather than `Outer.Inner`. In that case, adding `Outer.Math` in **File2** breaks **File1** regardless of where the using goes. This implies that the compiler searches the innermost enclosing namespace before it looks at any `using` statements.
 
+### Properties
+
+```c#
+class TimePeriod
+{
+    private double seconds;
+
+    public double Hours
+    {
+        get { return seconds / 3600; }
+        set { seconds = value * 3600; }
+    }
+}
+
+
+class Program
+{
+    static void Main()
+    {
+        TimePeriod t = new TimePeriod();
+
+        // Assigning the Hours property causes the 'set' accessor to be called.
+        t.Hours = 24;
+
+        // Evaluating the Hours property causes the 'get' accessor to be called.
+        System.Console.WriteLine("Time in hours: " + t.Hours);
+    }
+}
+// Output: Time in hours: 24
+```
+
+**Empty setter and getter**
+
+public field can be inherited but not overridable, whereas public property can be inherited and overidable. That is, in inheriting class you can have `virtual` keyword for property but not for field. In inhertied class you can have `override` keyword for property but not for fields.
+
+```c#
+public class Foo {
+  public virtual int MyField = 1; // Nope, this can't
+
+  public virtual int Bar {get; set; }
+}
+
+public class MyDerive : Foo {
+  public override MyField; // Nope, this can't
+
+  public override int Bar {
+    get {
+      //do something;
+    }
+    set; }
+}
+```
+
 ### Attributes
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/index
