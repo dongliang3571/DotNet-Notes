@@ -77,6 +77,10 @@ IEagle == .NetFramework (Specific / oldest and has the most features)
 
 https://msdn.microsoft.com/en-us/library/ms182532.aspx
 
+**Initializer and CleanUp**
+
+https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.testtools.unittesting.testcleanupattribute.aspx
+
 **Access private memeber for testing purpose**
 
 https://msdn.microsoft.com/en-us/library/ms243741.aspx
