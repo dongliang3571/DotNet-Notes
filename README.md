@@ -73,6 +73,23 @@ IBird == .NetCore (Less General)
 IEagle == .NetFramework (Specific / oldest and has the most features)
 ```
 
+### Unit testing
+
+https://msdn.microsoft.com/en-us/library/ms182532.aspx
+
+**Access private memeber for testing purpose**
+
+https://msdn.microsoft.com/en-us/library/ms243741.aspx
+
+
+```c#
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+var obj = new object();
+var wrapper = new PrivateObject(obj);
+wrapper.Invoke(method_name, parameters_array);
+```
+
 ### C Sharp Documentation
 
 https://mva.microsoft.com/en-us/training-courses/programming-in-c-jump-start-14254?l=j0iuozSfB_6900115888
