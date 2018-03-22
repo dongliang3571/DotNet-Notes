@@ -81,6 +81,13 @@ https://msdn.microsoft.com/en-us/library/ms182532.aspx
 
 https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.testtools.unittesting.testcleanupattribute.aspx
 
+`TestInitialize` runs before every test that is declared on the the same class where the attribute is declared.
+
+`ClassInitialize` runs only on the initialization of the class where the attribute is declared. In other words it won't run for every class. Just for the class that contains the ClassInitialize method.
+
+If you want a method that will run once before all tests or classes' initialization use the `AssemblyInitialize`.
+
+
 **Access private memeber for testing purpose**
 
 https://msdn.microsoft.com/en-us/library/ms243741.aspx
