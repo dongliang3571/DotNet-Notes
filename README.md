@@ -2493,3 +2493,41 @@ namespace Rextester
     
 }
 ```
+
+### `DllImportAttrubute`
+
+Indicates that the attributed method is exposed by an unmanaged dynamic-link library (DLL) as a static entry point
+
+https://msdn.microsoft.com/en-us/library/system.runtime.interopservices.dllimportattribute(v=vs.110).aspx
+
+https://msdn.microsoft.com/en-us/library/system.runtime.interopservices.callingconvention(v=vs.110).aspx
+
+```c#
+using System;
+using System.Runtime.InteropServices;
+
+class Example
+{
+    // Use DllImport to import the Win32 MessageBox function.
+    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+    public static extern int MessageBox(IntPtr hWnd, String text, String caption, uint type);
+
+    static void Main()
+    {
+        // Call the MessageBox function using platform invoke.
+        MessageBox(new IntPtr(0), "Hello World!", "Hello Dialog", 0);
+    }
+}
+```
+
+The following example demonstrates how to replace MessageBoxA with MsgBox in your code by using the EntryPoint field.
+
+```c#
+using System.Runtime.InteropServices;  
+
+public class Win32 {  
+    [DllImport("user32.dll", EntryPoint="MessageBoxA")]  
+    public static extern int MsgBox(int hWnd, String text, String caption,  
+                                    uint type);  
+}
+```
