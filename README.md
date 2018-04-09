@@ -1965,6 +1965,8 @@ Del del4 = name =>  { Console.WriteLine("Notification received for: {0}", name);
 
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/index
 
+https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/await
+
 ## Types
 
 The C# typing system contains the following categories:
