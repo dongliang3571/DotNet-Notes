@@ -60,7 +60,15 @@ class Program
     }
 }
 ```
-  
+
+**4.**
+
+Each project in a solution is consider an assembly. Each assembly will read it's App.config(After build, its name becomes `<AppName>.exe.config` or `<AppName>Test.dll.config`), this behavior includes Unit Test project.
+
+In order to have service like email or logging which depend on configs to work, we need to create it's own App.config for each project.
+
+Same thing for unit testing project, the email won't work if testing project doesn't have its own email config
+
 ### .NET Standard, .NET Core and .NET Framework 
 
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
