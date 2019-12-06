@@ -1975,6 +1975,35 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/
 
 https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/await
 
+https://blog.stephencleary.com/2012/02/async-and-await.html
+
+The `async` keyword enables the `await` keyword in that method and changes how method results are handled. That’s all the async keyword does! It does not run this method on a thread pool thread, or do any other kind of magic. The `async` keyword only enables the `await` keyword (and manages the method results).
+
+The beginning of an async method is executed just like any other method. That is, it runs synchronously until it hits an “await” (or throws an exception).
+
+`await` waits Task(Awaitable), not the method
+
+```c#
+public async Task NewStuffAsync()
+{
+  // Use await and have fun with the new stuff.
+  await ...
+}
+
+public Task MyOldTaskParallelLibraryCode()
+{
+  // Note that this is not an async method, so we can't use await in here.
+  ...
+}
+
+public async Task ComposeAsync()
+{
+  // We can await Tasks, regardless of where they come from.
+  await NewStuffAsync();
+  await MyOldTaskParallelLibraryCode();
+}
+```
+
 ## Types
 
 The C# typing system contains the following categories:
