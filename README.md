@@ -1977,6 +1977,7 @@ https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/await
 
 https://blog.stephencleary.com/2012/02/async-and-await.html
 
+
 The `async` keyword enables the `await` keyword in that method and changes how method results are handled. That’s all the async keyword does! It does not run this method on a thread pool thread, or do any other kind of magic. The `async` keyword only enables the `await` keyword (and manages the method results).
 
 The beginning of an async method is executed just like any other method. That is, it runs synchronously until it hits an “await” (or throws an exception).
@@ -2004,6 +2005,45 @@ public async Task ComposeAsync()
 }
 ```
 
+Async methods returning `Task` or `void` do not have a return value. Async methods returning `Task<T>` must return a value of type `T`:
+
+```c#
+public async Task<int> CalculateAnswer()
+{
+  await Task.Delay(100); // (Probably should be longer...)
+
+  // Return a type of "int", not "Task<int>"
+  return 42;
+}
+```
+
+It's very similar to Swift closure
+
+```swift
+// In Swft you have:
+
+// declare function definition
+func download(completion: @escape (() -> Void)) {
+  downloading(completionHandler: {
+    completion() // this is executed after downloading is finished
+  })
+}
+
+// use function
+download(completion: {
+  // do something
+})
+```
+
+```c#
+
+public async Task download() {
+  await downloading();
+  
+  completion(); // this is execute after downloading is finished
+}
+
+```
 ## Types
 
 The C# typing system contains the following categories:
