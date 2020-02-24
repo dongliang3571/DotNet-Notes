@@ -2746,3 +2746,8 @@ public dynamic ViewBag {
     
 ```
 `_dynamicViewDataDictionary` is an `ExpandoObject`; you can `add properties to it at runtime`. Its lifetime is the same as that of the controller, which is the lifetime of the HTTP request.
+
+**ViewBag, ViewData,TempDate**
+
+https://www.infragistics.com/community/blogs/b/dhananjay_kumar/posts/what-are-viewdata-viewbag-and-tempdata-in-asp-net-mvc
+https://www.infragistics.com/community/blogs/b/dhananjay_kumar/posts/what-are-viewdata-viewbag-and-tempdata-in-asp-net-mvc
