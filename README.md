@@ -2642,3 +2642,107 @@ public class Win32 {
                                     uint type);  
 }
 ```
+
+## ASP.NET
+
+https://dotnettutorials.net/lesson/asp-dot-net-mvc-viewbag/
+
+### MVC
+
+**Example of ViewBag in ASP.NET MVC:**
+
+Let us see an example to understand how to use the new dynamic type ViewBag in ASP.NET MVC to pass data from a controller action method to a view. We are going to work with the same example that we worked in our previous article with ViewData. So, modify the Index action method of HomeController class as shown below.
+
+```c#
+using FirstMVCDemo.Models;
+using System.Web.Mvc;
+namespace FirstMVCDemo.Controllers
+{
+    public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
+            EmployeeBusinessLayer employeeBL = new EmployeeBusinessLayer();
+            Employee employee = employeeBL.GetEmployeeDetails(101);
+            
+            ViewBag.Employee = employee;
+            ViewBag.Header = "Employee Details";
+            
+            return View();
+        }
+    }
+}
+```
+
+**Accessing the ViewBag in a View in ASP.NET MVC**
+
+Now we will see how to access the ViewBag data within an ASP.NET MVC view. So, modify the Index.cshtml view file as shown below.
+
+```c#
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Page Title</title>  
+</head>
+<body>
+    @{
+        var employee = ViewBag.Employee;
+    }
+    <h2>@ViewBag.Header</h2>
+    <table style="font-family:Arial">
+        <tr>
+            <td>Employee ID:</td>
+            <td>@employee.EmployeeId </td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>@employee.Name</td>
+        </tr>
+        <tr>
+            <td>Gender:</td>
+            <td>@employee.Gender</td>
+        </tr>
+        <tr>
+            <td>City:</td>
+            <td>@employee.City</td>
+        </tr>
+        <tr>
+            <td>Salary:</td>
+            <td>@employee.Salary</td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>@employee.Address</td>
+        </tr>
+    </table>
+</body>
+</html>
+```
+
+**Note:** The ViewBag is a dynamic property that is also resolved at runtime like ViewData; as a result, here also it will not provide compile-time error checking as well as intelligence support. For example, if we miss-spell the property names of the ViewBag, then we wouldn’t get any compile-time error rather we came to know about the error at runtime.
+
+**ViewBag**
+
+https://stackoverflow.com/questions/16949468/how-does-viewbag-in-asp-net-mvc-work-behind-the-scenes
+
+ViewBag is a property of ControllerBase. It is defined as follows:
+
+```c#
+public Object ViewBag { get; }
+Note that this signature is actually incorrect. Here's what the source code actually looks like:
+
+public dynamic ViewBag {
+    get {
+        if (_dynamicViewDataDictionary == null) {
+            _dynamicViewDataDictionary = new DynamicViewDataDictionary(() => ViewData);
+        }
+        return _dynamicViewDataDictionary;
+    }
+}
+    
+```
+`_dynamicViewDataDictionary` is an `ExpandoObject`; you can `add properties to it at runtime`. Its lifetime is the same as that of the controller, which is the lifetime of the HTTP request.
