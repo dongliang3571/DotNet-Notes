@@ -2678,7 +2678,7 @@ namespace FirstMVCDemo.Controllers
 
 Now we will see how to access the ViewBag data within an ASP.NET MVC view. So, modify the Index.cshtml view file as shown below.
 
-```c#
+```cshtml
 @{
     Layout = null;
 }
