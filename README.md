@@ -1,4 +1,4 @@
-# C-Sharp-Notes
+# DotNet-Notes
 
 ### Problems frequently Occur
 
