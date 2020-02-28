@@ -2314,7 +2314,21 @@ The `volatile` keyword will prevent the variable from being affected by possible
 For performance reasons, it's not always a good solution to declare a variable as volatile. In that case, you can use the following methods to access the variable: 'Thread.VolatileRead', 'Thread.VolatileWrite', and 'Thread.MemoryBarrier'. These methods will put barriers for reading/writing memory only where necessary.
 
 Finally, you can implement "lazy initialization" using the Lazy<T> class, which was designed specifically for this purpose and is available in .NET starting with version 4.
+
+### Anonymous types
+
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/anonymous-types
+
+```c#
+// The following example shows an anonymous type that is initialized with two properties named Amount and Message.
+
+var v = new { Amount = 108, Message = "Hello" };  
   
+// Rest the mouse pointer over v.Amount and v.Message in the following  
+// statement to verify that their inferred types are int and string.  
+Console.WriteLine(v.Amount + v.Message);  
+```
+
 ### default value expressions
 
 A default value expression produces the default value for a type. Default value expressions are particularly useful in generic classes and methods. One issue that arises using generics is how to assign a default value to a parameterized type `T` when you do not know the following in advance:
