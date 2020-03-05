@@ -81,6 +81,10 @@ IBird == .NetCore (Less General)
 IEagle == .NetFramework (Specific / oldest and has the most features)
 ```
 
+### Mock framework
+
+https://docs.microsoft.com/en-us/ef/ef6/fundamentals/testing/mocking
+
 ### Unit testing
 
 https://msdn.microsoft.com/en-us/library/ms182532.aspx
