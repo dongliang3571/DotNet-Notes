@@ -1,5 +1,11 @@
 # DotNet-Notes
 
+### Entity Framework
+
+**Eagerly loading**
+
+https://docs.microsoft.com/en-us/ef/ef6/querying/related-data
+
 ### Problems frequently Occur
 
 **1.**
