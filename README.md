@@ -89,6 +89,8 @@ https://docs.microsoft.com/en-us/ef/ef6/fundamentals/testing/mocking
 
 https://msdn.microsoft.com/en-us/library/ms182532.aspx
 
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
+
 **Initializer and CleanUp**
 
 https://msdn.microsoft.com/en-us/library/microsoft.visualstudio.testtools.unittesting.testcleanupattribute.aspx
