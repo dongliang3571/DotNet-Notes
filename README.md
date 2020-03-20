@@ -75,6 +75,24 @@ In order to have service like email or logging which depend on configs to work, 
 
 Same thing for unit testing project, the email won't work if testing project doesn't have its own email config
 
+**5.**
+
+**Moq issues**
+
+When you change/add/remove a field in a Model, re-run tests, you will get errors like `The model backing the 'EFDbContextProxy' context has changed`
+
+```
+StackTrace: 
+    at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+       at System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+```
+
+basically there is cached temp database, you want to delele them and re-run test should be fine
+
+Cache files are located in `/Users/<username>/TigraDBConnection.mdf` and `/Users/<username>/TigraDBConnection_log.Idf`
+
+Some helpful information: https://stackoverflow.com/questions/31564127/the-model-backing-the-efdbcontextproxy-context-has-changed-testing-cache#answer-54406602
+
 ### .NET Standard, .NET Core and .NET Framework 
 
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
