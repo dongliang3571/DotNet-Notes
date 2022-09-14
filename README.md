@@ -1,5 +1,9 @@
 # DotNet-Notes
 
+### WaitHandle, ManualSetEvent, AutoSetEvent
+
+https://jonskeet.uk/csharp/threads/waithandles.html
+
 ### Entity Framework
 
 **Eagerly loading**
