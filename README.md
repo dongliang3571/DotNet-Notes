@@ -123,14 +123,16 @@ Some helpful information: https://stackoverflow.com/questions/31564127/the-model
 
 ### .NET Standard, .NET Core and .NET Framework 
 
+https://code-maze.com/differences-between-net-framework-net-core-and-net-standard/
+
 https://stackoverflow.com/questions/42939454/what-is-the-difference-between-net-core-and-net-standard-class-library-project
 
 Creative answer
 
 ```c#
-IAnimal == .NetStandard (General)
-IBird == .NetCore (Less General)
-IEagle == .NetFramework (Specific / oldest and has the most features)
+IAnimal == .NetStandard (General) // Specification
+IBird == .NetCore (Less General) // Cross platform .NET implementation of the Specification
+IEagle == .NetFramework (Specific / oldest and has the most features) // Only runs on windows
 ```
 
 ### Mock framework
