@@ -1,5 +1,29 @@
 # DotNet-Notes
 
+### binding redirects
+
+Why are binding redirects needed at all? Suppose you have application A that references library B, and also library C of version 1.1.2.5. Library B in turn also references library C, but of version 1.1.1.0. Now we have a conflict, because you cannot load different versions of the same assembly at runtime. To resolve this conflict you might use binding redirect, usually to the new version (but can be to the old too). You do that by adding the following to app.config file of application A, under configuration > runtime > assemblyBinding section (see here for an example of full config file):
+
+```
+<dependentAssembly>
+    <assemblyIdentity name="C"  
+                      publicKeyToken="32ab4ba45e0a69a1"  
+                      culture="en-us" />  
+
+    <bindingRedirect oldVersion="1.1.1.0" newVersion="1.1.2.5" />  
+</dependentAssembly>
+```
+
+You can also specify a range of versions to map:
+
+```
+<bindingRedirect oldVersion="0.0.0.0-1.1.1.0" newVersion="1.1.2.5" />  
+```
+
+Now library B, which was compiled with reference to C of version 1.1.1.0 will use C of version 1.1.2.5 at runtime. Of course, you better ensure that library C is backwards compatible or this might lead to unexpected results.
+
+You can redirect any versions of libraries, not just major ones
+
 ### WaitHandle, ManualSetEvent, AutoSetEvent
 
 https://jonskeet.uk/csharp/threads/waithandles.html
