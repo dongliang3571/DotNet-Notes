@@ -1,5 +1,69 @@
 # DotNet-Notes
 
+
+### csproj file
+
+```
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Project settings -->
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+
+  <!-- nuget packages -->
+  <ItemGroup>
+    <PackageReference Include="MSTest.TestAdapter" />
+    <PackageReference Include="MSTest.TestFramework" />
+  </ItemGroup>
+  <!-- Direct dll references from local disk -->
+  <ItemGroup>
+    <Reference Include="netstandard" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="$(path)\lib\net45\Test.dll" />
+  </ItemGroup>
+
+  <!-- direct project references from local disk -->
+  <!-- Note that this will not include reference list inside each project>
+  <ItemGroup>
+    <ProjectReference Include="$(INETROOT)\$(srcdirname)\Commons.csproj" />
+    <ProjectReference Include="$(INETROOT)\$(srcdirname)\Services\Project1.csproj" />
+  </ItemGroup>
+
+  <!-- also direct project reference from local disk -->
+  <!-- Note that this will include reference list inside each project>
+  <Import Project="$(ROOT)\$(srcdirname)\aa\cc\exports.props" />
+  <Import Project="$(ROOT)\$(srcdirname)\bb\dd\exports.props" />
+
+
+  <ItemGroup>
+    <Content Include="$(some-path)\content\file.json">
+      <Visible>false</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(some-path)\content\file2.json">
+      <Visible>false</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="some\path\*\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="some\path2\*\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="some\path3\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+</Project>
+```
+
 ### binding redirects
 
 Why are binding redirects needed at all? Suppose you have application A that references library B, and also library C of version 1.1.2.5. Library B in turn also references library C, but of version 1.1.1.0. Now we have a conflict, because you cannot load different versions of the same assembly at runtime. To resolve this conflict you might use binding redirect, usually to the new version (but can be to the old too). You do that by adding the following to app.config file of application A, under configuration > runtime > assemblyBinding section (see here for an example of full config file):
