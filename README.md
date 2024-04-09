@@ -11,12 +11,12 @@
     <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
 
-  <!-- nuget packages -->
+  <!-- nuget packages, they are transitive packages, e.g. if this project is referenced from another project, all the nuget package are brough over to the referencing project -->
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" />
     <PackageReference Include="MSTest.TestFramework" />
   </ItemGroup>
-  <!-- Direct dll references from local disk -->
+  <!-- Direct dll references from local disk, normally not transitive, check ProjectReference for when they're transitive -->
   <ItemGroup>
     <Reference Include="netstandard" />
     <Reference Include="System" />
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <!-- direct project references from local disk -->
-  <!-- Note that this will not include reference list inside each project>
+  <!-- Note that this will include reference list inside each project only if the Reference are used in the referencing projects>
   <ItemGroup>
     <ProjectReference Include="$(INETROOT)\$(srcdirname)\Commons.csproj" />
     <ProjectReference Include="$(INETROOT)\$(srcdirname)\Services\Project1.csproj" />
